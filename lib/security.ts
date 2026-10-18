@@ -54,12 +54,20 @@ export async function assertSameOrigin(request: Request) {
 export async function enforceRateLimit(key: string, limit: number, windowSeconds: number) {
   const now = new Date();
   const resetAt = new Date(now.getTime() + windowSeconds * 1000);
-  const bucket = await prisma.rateLimitBucket.upsert({ where: { key }, create: { key, count: 1, resetAt }, update: { count: { increment: 1 } } });
-  if (bucket.resetAt <= now) {
-    await prisma.rateLimitBucket.update({ where: { key }, data: { count: 1, resetAt } });
-    return true;
-  }
-  return bucket.count <= limit;
+  await prisma.rateLimitBucket.upsert({
+    where: { key },
+    create: { key, count: 0, resetAt },
+    update: { count: { increment: 0 } }
+  });
+  const rows = await prisma.$queryRaw<Array<{ count: number }>>`
+    UPDATE "RateLimitBucket"
+    SET "count" = CASE WHEN "resetAt" <= ${now} THEN 1 ELSE "count" + 1 END,
+        "resetAt" = CASE WHEN "resetAt" <= ${now} THEN ${resetAt} ELSE "resetAt" END,
+        "updatedAt" = ${now}
+    WHERE "key" = ${key}
+    RETURNING "count"
+  `;
+  return (rows[0]?.count ?? limit + 1) <= limit;
 }
 export function requestIpHash(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
