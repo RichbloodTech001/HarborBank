@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { currentUser } from "@/lib/security";
+import { RegisterForm } from "@/components/auth-forms";
+export const metadata: Metadata = { title: "Create profile" };
+export default async function RegisterPage() { if (await currentUser()) redirect("/dashboard"); return <main className="portal-auth-wrap"><aside className="portal-auth-aside"><Link className="brand" href="/"><span className="brand-mark">HB</span><span>Harbor<span>Bank</span></span></Link><div><div className="eyebrow eyebrow-light"><span className="eyebrow-line"/> GET STARTED</div><h1>A clearer way<br/>to <span>stay organized.</span></h1><p>Create a profile to explore the customer portal. A profile is not a bank account and does not enable financial transactions.</p></div><div className="portal-footer">Use a unique password. Never reuse a password from another service.</div></aside><section className="portal-auth-main"><div className="portal-auth-form"><Link className="portal-link" href="/">← Back to homepage</Link><h2>Create your profile</h2><p>Set up your HarborBank demo customer profile.</p><RegisterForm/><div className="portal-smallprint">By continuing, you understand this is a software prototype and not a licensed bank. Already registered? <Link className="portal-link" href="/login">Sign in</Link>.</div></div></section></main>; }
