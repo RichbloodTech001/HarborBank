@@ -1,4 +1,4 @@
-name: HarborBank checks
+name: HarborBank application checks
 
 on:
   push:
@@ -10,8 +10,25 @@ permissions:
   contents: read
 
 jobs:
-  syntax:
+  validate:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/harborbank?schema=public
+      NEXT_TELEMETRY_DISABLED: "1"
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: harborbank
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d harborbank"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -19,5 +36,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate JavaScript syntax
-        run: npm run check
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate Prisma schema and generate client
+        run: npx prisma validate && npm run db:generate
+      - name: Type-check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Build production bundle
+        run: npm run build
