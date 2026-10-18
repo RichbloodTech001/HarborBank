@@ -44,6 +44,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Validate Prisma schema and generate client
         run: npx prisma validate && npm run db:generate
+      - name: Apply migrations to CI database
+        run: npm run db:migrate
       - name: Type-check
         run: npm run typecheck
       - name: Unit tests
