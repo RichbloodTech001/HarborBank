@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071b36">
+  <meta name="description" content="HarborBank — a clearer way to manage everyday banking. Explore accounts, cards, payments, and financial tools in this interactive demo.">
+  <title>HarborBank — Banking with a clearer view</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="announcement"><span class="announcement-dot"></span> A clearer view of your money starts here <a href="#digital">Explore digital banking <span aria-hidden="true">→</span></a></div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="HarborBank home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M4 17 20 6l16 11v3H4z"/><path d="M8 22h24M10 24v9m7-9v9m7-9v9m7-9v9M5 35h30"/></svg></span><span>Harbor<span>Bank</span></span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <a href="#personal">Personal</a><a href="#business">Business</a><a href="#digital">Digital banking</a><a href="#learn">Learn</a>
+    </nav>
+    <div class="header-actions"><button class="text-button" data-modal="locations">Find a location</button><button class="button button-small button-outline" data-modal="signin">Sign in <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> BANKING THAT MOVES WITH YOU</div>
+        <h1>Your money.<br><span>Your next move.</span></h1>
+        <p class="hero-description">Make room for what matters with straightforward banking tools designed to help you move forward with confidence.</p>
+        <div class="hero-buttons"><button class="button button-primary" data-modal="signin">Explore online banking <span aria-hidden="true">→</span></button><a class="button button-light" href="#personal">Discover your options</a></div>
+        <div class="hero-assurance"><span class="assurance-icon">✓</span><span>Built around clarity, control, and confidence.</span></div>
+      </div>
+      <div class="hero-visual" aria-label="Illustration of a banking dashboard and payment card">
+        <div class="visual-glow"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="dashboard-card">
+          <div class="dash-top"><span class="dash-label">DEMO OVERVIEW</span><span class="live-indicator">● Interactive preview</span></div>
+          <p class="balance-caption">Available balance</p><div class="balance-line"><strong id="demo-balance">$12,480.50</strong><button class="eye-button" id="toggle-balance" aria-label="Hide balance" title="Hide balance">◉</button></div>
+          <div class="dash-change"><span>↗ 4.8%</span> <span>sample monthly change</span></div>
+          <div class="mini-chart" aria-label="Illustrative balance chart"><svg viewBox="0 0 420 110" role="img" aria-label="Illustrative upward trend"><defs><linearGradient id="chartfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#63d9c2" stop-opacity=".3"/><stop offset="1" stop-color="#63d9c2" stop-opacity="0"/></linearGradient></defs><path d="M0 91 C35 88 42 60 76 68 S120 83 152 54 S202 71 231 43 S277 61 306 31 S352 47 382 15 L420 9 L420 110 L0 110Z" fill="url(#chartfill)"/><path d="M0 91 C35 88 42 60 76 68 S120 83 152 54 S202 71 231 43 S277 61 306 31 S352 47 382 15 L420 9" fill="none" stroke="#63d9c2" stroke-width="3" stroke-linecap="round"/></svg></div>
+          <div class="dash-footer"><span>Illustrative activity</span><span>Not a real account</span></div>
+        </div>
+        <div class="bank-card"><div class="card-top"><span>Harbor<span class="card-bank">Bank</span></span><span class="chip">▦</span></div><div class="card-number">•••• &nbsp; •••• &nbsp; •••• &nbsp; 2048</div><div class="card-bottom"><span>HARBOR MEMBER</span><span class="card-network">◉</span></div></div>
+        <div class="floating-note"><span class="note-icon">↗</span><span><strong>Stay in control</strong><small>Tools for your everyday</small></span></div>
+      </div>
+      <div class="hero-bottom"><span>PERSONAL BANKING</span><span>PAYMENTS & TRANSFERS</span><span>FINANCIAL WELLNESS</span><span>SECURITY FIRST</span></div>
+    </section>
+    <section class="trust-strip"><div><strong>One clear view</strong><span>Bring everyday money tasks together.</span></div><div><strong>More control</strong><span>Understand your options at a glance.</span></div><div><strong>Move confidently</strong><span>Explore tools at your own pace.</span></div></section>
+    <section class="section section-services" id="personal">
+      <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> BANKING FOR REAL LIFE</div><h2>Make banking work<br>for <span>your life.</span></h2></div><p>Whether you're building your savings or planning your next big step, start with the tools that fit you.</p></div>
+      <div class="service-grid">
+        <article class="service-card service-featured"><div class="service-icon">↗</div><div class="service-meta">01 / EVERYDAY</div><h3>Checking accounts</h3><p>Keep your everyday spending organized with practical account tools and a clearer picture of your money.</p><a href="#digital" class="arrow-link">Explore checking <span>↗</span></a><div class="decor-circle"></div></article>
+        <article class="service-card"><div class="service-icon service-icon-blue">◈</div><div class="service-meta">02 / SAVE</div><h3>Savings goals</h3><p>Give your plans a place to grow with savings features and goal-setting ideas.</p><a href="#learn" class="arrow-link">Explore saving <span>↗</span></a></article>
+        <article class="service-card"><div class="service-icon service-icon-gold">▤</div><div class="service-meta">03 / SPEND</div><h3>Cards & payments</h3><p>Explore ways to manage card activity, review payments, and stay on top of spending.</p><a href="#digital" class="arrow-link">Explore payments <span>↗</span></a></article>
+        <article class="service-card"><div class="service-icon service-icon-purple">⌂</div><div class="service-meta">04 / PLAN</div><h3>Borrowing options</h3><p>Learn about borrowing basics and the questions to ask before choosing a product.</p><a href="#learn" class="arrow-link">Learn more <span>↗</span></a></article>
+      </div>
+    </section>
+    <section class="digital-section" id="digital"><div class="digital-copy"><div class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> BANKING, ON YOUR TERMS</div><h2>A little more<br>clarity. A lot more<br><span>possibility.</span></h2><p>Explore an intuitive digital banking concept that puts everyday tasks and helpful insights in one place.</p><ul class="check-list"><li><span>✓</span> A simple overview of account activity</li><li><span>✓</span> Clear payment and transfer pathways</li><li><span>✓</span> Helpful tools for tracking your goals</li></ul><button class="button button-primary" data-modal="signin">Preview digital banking <span>→</span></button><small class="demo-note">Demo only. No account access or real transactions.</small></div><div class="phone-stage"><div class="phone"><div class="phone-notch"></div><div class="phone-content"><div class="phone-greeting">Good morning <span>✦</span></div><div class="phone-name">Your money snapshot</div><div class="phone-balance-label">SAMPLE TOTAL BALANCE</div><div class="phone-balance">$12,480.50</div><div class="phone-actions"><button data-modal="signin"><span>↗</span>Transfer</button><button data-modal="signin"><span>＋</span>Add funds</button><button data-modal="signin"><span>▤</span>Activity</button></div><div class="phone-list-head"><strong>Recent activity</strong><span>View all</span></div><div class="phone-transaction"><span class="transaction-symbol">↗</span><span><b>Everyday purchase</b><small>Sample · Today</small></span><strong>−$42.80</strong></div><div class="phone-transaction"><span class="transaction-symbol income">↓</span><span><b>Sample deposit</b><small>Illustrative only</small></span><strong class="income-text">+$250.00</strong></div><div class="phone-progress"><div><span>Monthly savings goal</span><b>64%</b></div><div class="progress-track"><span></span></div></div><div class="phone-nav"><span>⌂<small>Home</small></span><span>▤<small>Accounts</small></span><span>↗<small>Move</small></span><span>☻<small>Profile</small></span></div></div></div><div class="phone-caption">Concept preview · fictional data</div></div></section>
+    <section class="section section-business" id="business"><div class="business-panel"><div class="business-art"><div class="art-square art-square-one"></div><div class="art-square art-square-two"></div><div class="art-ring">HB</div><div class="art-caption">BUILT FOR WHAT'S NEXT</div></div><div class="business-copy"><div class="eyebrow"><span class="eyebrow-line"></span> FOR YOUR BUSINESS</div><h2>Big plans need<br>a <span>steady partner.</span></h2><p>Explore practical ideas for separating business finances, planning cash flow, and preparing for growth.</p><a class="button button-dark" href="#learn">Explore business banking <span>→</span></a></div></div></section>
+    <section class="section learn-section" id="learn"><div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> KNOWLEDGE THAT MOVES YOU</div><h2>Feel better about<br><span>what comes next.</span></h2></div><p>Small steps can make financial decisions feel more manageable. Start with a topic that matters to you.</p></div><div class="learn-grid"><a class="learn-card" href="#security"><span class="learn-number">01 — PLAN</span><span class="learn-symbol">◎</span><h3>Build a savings habit</h3><p>Practical ways to set a goal and make progress over time.</p><span class="learn-arrow">Read the guide ↗</span></a><a class="learn-card" href="#security"><span class="learn-number">02 — PROTECT</span><span class="learn-symbol">⌑</span><h3>Recognize common scams</h3><p>Learn warning signs and safer habits for online banking.</p><span class="learn-arrow">Read the guide ↗</span></a><a class="learn-card" href="#security"><span class="learn-number">03 — ORGANIZE</span><span class="learn-symbol">⌘</span><h3>Understand your cash flow</h3><p>See how a simple spending plan can help you stay organized.</p><span class="learn-arrow">Read the guide ↗</span></a></div></section>
+    <section class="security-section" id="security"><div class="security-icon">✳</div><div><div class="eyebrow eyebrow-light">YOUR SECURITY MATTERS</div><h2>Confidence starts with<br><span>good habits.</span></h2><p>Use unique passwords, enable multi-factor authentication where available, and never share verification codes. HarborBank's sign-in here is a non-functional demo.</p></div><a href="#footer" class="security-link">Explore safety basics <span>↗</span></a></section>
+    <section class="cta-section"><div class="cta-orb"></div><div class="eyebrow"><span class="eyebrow-line"></span> TAKE THE NEXT STEP</div><h2>Make space for<br><span>what matters.</span></h2><p>Explore the HarborBank experience and see how a clearer approach to everyday banking could feel.</p><button class="button button-primary" data-modal="signin">Open demo sign-in <span>→</span></button><small>Fictional demo interface. Not a licensed financial institution.</small></section>
+  </main>
+  <footer id="footer"><div class="footer-main"><div class="footer-brand"><a class="brand brand-footer" href="#"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M4 17 20 6l16 11v3H4z"/><path d="M8 22h24M10 24v9m7-9v9m7-9v9m7-9v9M5 35h30"/></svg></span><span>Harbor<span>Bank</span></span></a><p>Banking with a clearer view.</p></div><div class="footer-column"><strong>Explore</strong><a href="#personal">Personal banking</a><a href="#business">Business banking</a><a href="#digital">Digital experience</a></div><div class="footer-column"><strong>Resources</strong><a href="#learn">Financial learning</a><a href="#security">Security basics</a><button data-modal="locations">Contact & locations</button></div><div class="footer-column"><strong>Demo access</strong><button data-modal="signin">Customer sign in</button><button data-modal="signin">Create demo profile</button><span class="footer-muted">No real accounts or funds</span></div></div><div class="footer-bottom"><span>© <span id="year"></span> HarborBank · Concept website</span><span>Fictional brand · No banking services are provided</span><a href="#top" id="back-to-top">Back to top ↑</a></div></footer>
+  <dialog id="app-modal" class="app-modal" aria-labelledby="modal-title"><div class="modal-top"><a class="brand" href="#"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M4 17 20 6l16 11v3H4z"/><path d="M8 22h24M10 24v9m7-9v9m7-9v9m7-9v9M5 35h30"/></svg></span><span>Harbor<span>Bank</span></span></a><button class="modal-close" aria-label="Close dialog">×</button></div><div id="modal-content"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
