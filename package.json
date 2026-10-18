@@ -1,0 +1,11 @@
+{
+  "name": "harborbank",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HarborBank responsive banking concept website and safe interactive demo.",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "dev": "npx --yes serve .",
+    "check": "node --check app.js"
+  }
+}
