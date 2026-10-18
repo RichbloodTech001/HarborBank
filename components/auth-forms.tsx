@@ -1,0 +1,11 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+function AuthFields({ mode }: { mode: "login" | "register" }) {
+  const router = useRouter(); const [name, setName] = useState(""); const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [busy, setBusy] = useState(false); const [error, setError] = useState("");
+  async function submit(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); setError(""); setBusy(true); try { const response = await fetch(`/api/auth/${mode}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, email, password }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error || "Unable to continue."); setPassword(""); router.push("/dashboard"); router.refresh(); } catch (e) { setError(e instanceof Error ? e.message : "Unable to continue."); } finally { setBusy(false); } }
+  return <form onSubmit={submit} noValidate>{mode === "register" && <><label className="form-label" htmlFor="name">Full name</label><input className="form-input" id="name" name="name" autoComplete="name" required minLength={2} maxLength={80} value={name} onChange={e=>setName(e.target.value)} /></>}<label className="form-label" htmlFor="email">Email address</label><input className="form-input" id="email" name="email" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} /><label className="form-label" htmlFor="password">{mode === "register" ? "Create password (12+ characters)" : "Password"}</label><input className="form-input" id="password" name="password" type="password" autoComplete={mode === "register" ? "new-password" : "current-password"} required minLength={mode === "register" ? 12 : 1} maxLength={128} value={password} onChange={e=>setPassword(e.target.value)} />{error && <div className="portal-alert error" role="alert">{error}</div>}<button className="button button-primary" type="submit" disabled={busy}>{busy ? "Please wait…" : mode === "register" ? "Create profile →" : "Sign in →"}</button></form>;
+}
+export function LoginForm(){ return <AuthFields mode="login"/>; }
+export function RegisterForm(){ return <AuthFields mode="register"/>; }
