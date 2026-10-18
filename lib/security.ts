@@ -46,10 +46,21 @@ export function apiError(error: unknown) {
 export async function assertSameOrigin(request: Request) {
   const origin = request.headers.get("origin");
   if (!origin) return process.env.NODE_ENV !== "production";
-  const host = (await headers()).get("x-forwarded-host") ?? (await headers()).get("host");
-  const forwardedProto = (await headers()).get("x-forwarded-proto");
-  const expected = host ? `${forwardedProto || new URL(request.url).protocol.replace(":", "")}://${host}` : new URL(request.url).origin;
-  return new URL(origin).origin === expected;
+  try {
+    const parsedOrigin = new URL(origin);
+    if (parsedOrigin.protocol !== "https:" && parsedOrigin.protocol !== "http:") return false;
+    const configuredOrigin = process.env.APP_ORIGIN;
+    if (configuredOrigin) return parsedOrigin.origin === new URL(configuredOrigin).origin;
+    const requestHeaders = await headers();
+    const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
+    const forwardedProto = requestHeaders.get("x-forwarded-proto");
+    const expected = host
+      ? `${forwardedProto || new URL(request.url).protocol.replace(":", "")}://${host}`
+      : new URL(request.url).origin;
+    return parsedOrigin.origin === new URL(expected).origin;
+  } catch {
+    return false;
+  }
 }
 export async function enforceRateLimit(key: string, limit: number, windowSeconds: number) {
   const now = new Date();
