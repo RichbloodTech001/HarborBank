@@ -45,7 +45,7 @@ export function apiError(error: unknown) {
 }
 export async function assertSameOrigin(request: Request) {
   const origin = request.headers.get("origin");
-  if (!origin) return true;
+  if (!origin) return process.env.NODE_ENV !== "production";
   const host = (await headers()).get("x-forwarded-host") ?? (await headers()).get("host");
   const forwardedProto = (await headers()).get("x-forwarded-proto");
   const expected = host ? `${forwardedProto || new URL(request.url).protocol.replace(":", "")}://${host}` : new URL(request.url).origin;
