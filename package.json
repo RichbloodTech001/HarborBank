@@ -8,11 +8,12 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",
-    "check": "node --check app.js",
+    "check": "npm run typecheck && npm run test",
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",
@@ -31,7 +32,10 @@
     "eslint": "^9.35.0",
     "eslint-config-next": "^15.5.4",
     "prisma": "^6.16.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "tsx": "^4.20.5"
   },
-  "engines": { "node": ">=20.0.0" }
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
