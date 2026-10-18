@@ -32,7 +32,7 @@ npm run db:migrate
 npm run dev
 ```
 
-Open the local URL shown in the terminal. For production, configure environment variables in your hosting provider's secret manager; never commit real secrets.
+Open the local URL shown in the terminal. Set `APP_ORIGIN` to the exact public HTTPS origin in production so state-changing requests can validate their Origin header. Set `IP_HASH_SALT` to a long random secret. For production, configure environment variables in your hosting provider's secret manager; never commit real secrets.
 
 ## Initial administrator provisioning
 
