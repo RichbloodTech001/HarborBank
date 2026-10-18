@@ -1,44 +1,75 @@
 # HarborBank
 
-A responsive banking-style concept website with safe, fictional demo interactions. This is an original HarborBank interface, not a copy of another bank's proprietary website or branding.
+HarborBank is a responsive banking-style web application prototype built with Next.js, TypeScript, PostgreSQL, and Prisma. It provides customer profile management and audited deposit/withdrawal **request workflows**. It is not a licensed bank and is not currently able to move real money.
 
-## Current implementation
+## Implemented in this repository
 
-- Responsive landing page and mobile navigation
-- Personal banking, business banking, digital banking, learning, and security sections
-- Interactive demo sign-in modal that does not authenticate or transmit credentials
-- Sample dashboard balance visibility toggle
-- Accessible dialog close behavior, status messages, and reduced-motion support
-- Static preview that can run without API keys or financial provider credentials
+- Responsive public homepage and customer/admin portal layouts
+- Customer registration and sign-in with bcrypt password hashing
+- Random opaque session tokens stored as SHA-256 hashes in the database; HTTP-only, SameSite cookies; server-side session revocation on sign-out
+- Customer profile edit and account-record listing, scoped to the authenticated customer
+- Request creation with decimal validation, per-customer idempotency key, unique reference, and ownership checks
+- Request detail and pending-request cancellation
+- Admin-only customer search, customer access suspension/restoration, request review queue, and read-only audit log viewer
+- Audit events for registration, login attempts, profile changes, request creation/cancellation/review, and customer access changes
+- PostgreSQL Prisma schema and initial migration
+- Health endpoint at `/api/health`
+- GitHub Actions workflow for Prisma validation, type-checking, lint, and production build
 
 ## Run locally
 
-Requires Node.js 18 or newer.
+Requirements: Node.js 20+, npm, and PostgreSQL 16+.
+
+1. Copy `.env.example` to `.env` and set `DATABASE_URL` to your local PostgreSQL connection string.
+2. Install dependencies and generate the Prisma client.
+3. Apply the checked-in database migration.
+4. Start the development server.
 
 ```bash
-npm run check
+npm install
+npm run db:generate
+npm run db:migrate
 npm run dev
 ```
 
-Open the local URL printed by the static server. You can also open `index.html` directly in a browser, though using the local server is recommended.
+Open the local URL shown in the terminal. For production, configure environment variables in your hosting provider's secret manager; never commit real secrets.
 
-## Important limitations
+## Initial administrator provisioning
 
-This repository currently contains a **front-end demo only**. It is not a bank, is not licensed to provide financial services, and does not connect to real accounts, payment processors, or banking rails. All displayed balances and activity are fictional. The sign-in form is deliberately non-functional and should never be used to collect real credentials.
+Public registration **always creates a CUSTOMER** role. It must never accept a role from the browser or grant admin privileges based on a public email allowlist.
 
-## Planned build sequence
+After creating and verifying an operator account, an authorized database operator may provision the first admin role using a controlled database session:
 
-1. Establish a tested application framework, shared design tokens, route layout, linting, and automated checks.
-2. Implement real authentication with secure server-side sessions, password hashing, verification, recovery, rate limiting, and authorization tests.
-3. Add a relational database schema and migrations for users, accounts, requests, ledger entries, notifications, and audit events.
-4. Implement account-scoped customer pages, transaction request workflows, and server-enforced ownership.
-5. Build admin customer management, review queues, reporting, and immutable audit trails with least-privilege access.
-6. Add exact decimal/minor-unit money handling, idempotency, concurrency-safe ledger operations, and reconciliation.
-7. Integrate a payment provider only after server secrets, signed webhook verification, replay protection, and reconciliation are configured.
-8. Add accessibility, responsive, security, API, integration, and end-to-end tests; document backups, monitoring, and deployment.
+```sql
+UPDATE "User"
+SET "role" = 'ADMIN'
+WHERE lower("email") = lower('verified-operator@example.com');
+```
 
-Real-money activity must remain disabled until security reviews, legal/regulatory obligations, payment-provider approval, and financial controls are independently verified. Do not store payment card data or expose secrets in client-side code.
+Replace the example email with the exact operator account you verified. Run this only with authorized database access, record the change under your operational controls, and keep the account protected with a unique strong password. Never expose a public admin-bootstrap endpoint.
 
-## Repository
+## Important financial and security limits
 
-https://github.com/RichbloodTech001/HarborBank
+- This is a software prototype, not a regulated banking service.
+- Account records are not proof of real bank accounts. No authoritative account balance is displayed.
+- Deposit and withdrawal requests are workflow records only. An admin decision changes request status and **does not credit, debit, or transfer funds**.
+- There is no ledger, payment-provider integration, verified webhook flow, payout rail, settlement, reconciliation, or live-money support.
+- Email verification, password reset, MFA, monitoring/alerting, production rate-limit hardening, and an independent security review remain required before a public production launch.
+- The current database-backed rate-limit and audit patterns are a foundation, not a substitute for a dedicated distributed rate limiter, immutable external audit storage, abuse monitoring, and operational controls.
+- Configure a strong `IP_HASH_SALT` and use HTTPS in deployment. The application enables secure cookies in production and rejects state-changing requests without a valid same-origin Origin header.
+- Do not enter real bank credentials, card details, or financial information into an unreviewed deployment.
+
+## Production-readiness checklist
+
+Before calling this production-ready, run the GitHub Actions checks and verify their results; apply migrations against a staging database; test registration/login/logout, account ownership, role enforcement, idempotency, cancellation races, concurrent review decisions, rate limiting, session expiry, CSRF defenses, backups and restore, monitoring, and dependency/security scans. Add email verification and recovery, MFA for admins, a proper production rate limiter, privacy/retention policies, incident response, and independent penetration testing. Real-money features also require provider approval, applicable licensing/compliance, signed webhook verification, a balanced ledger, reconciliation, and explicit financial controls.
+
+## Main routes
+
+- `/` — public homepage
+- `/register`, `/login` — customer authentication
+- `/dashboard`, `/accounts`, `/profile` — customer portal
+- `/requests/new`, `/transactions` — request workflows and history
+- `/admin`, `/admin/customers`, `/admin/requests`, `/admin/audit-logs` — administrator portal
+- `/api/health` — readiness endpoint
+
+Repository: https://github.com/RichbloodTech001/HarborBank
